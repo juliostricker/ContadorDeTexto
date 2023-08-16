@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Contador de Letras</title>
+</head>
+<body>
+    <h3>Digite o seu texto aqui:</h3>
+    <textarea id="text" autofocus maxlength="50" onkeyup="conta_textarea(this.value)"></textarea>
+    <!-- 
+        autofocus:  Assim que a página abre direciona o foco para o elemento;
+        maxLength="30": limita a quantidade máxima de caracteres digitdos;
+        onkeyup="conta_textarea(this.value)"
+            -onkeyup: ao terminar de pressionar a tecla;
+            -conta_textarea(): chama a função, obs: o nome você escolhe;
+            -(this.value): captura o valor inserido no textarea;
+    -->
+    <p>Máximo de caractéres permidido: <span>50</span></p>
+    <br>
+    <h2>Caracteres Restantes: 
+        <span id="contador"></span>
+    </h2>
+
+    <p>Caracteres digitados: <span id="letras"></span></p> 
+    <p>Palavras digitadas: <span id="palavras"></span></p> 
+    <p>Número de linhas: <span id="linhas"></span></p> 
+
+    <script>
+        function conta_textarea(valor) {
+            quant = 50;
+            total = valor.length;
+            console.log(total);
+            // Conta quantas letras faltam.
+            if(total <= quant) {
+                resto = quant - total;
+                document.getElementById('contador').innerHTML = resto;
+            } else {
+                document.getElementById('texto').value = valor.substr(0,quant);
+            }
+            // Conta quantas letras foram digitadas
+            document.getElementById('letras').innerHTML = total;
+            
+            // Identifica último caracter digitado
+            ultimaLetra = valor[valor.length -1];
+            // Conta quantas palavras foram digitadas
+            if (ultimaLetra == ' ' || ultimaLetra == '\n'){
+                palavras = valor.split(/\s+/);
+                document.getElementById('palavras').innerText = palavras.length - 1;
+            } else {
+                palavras = valor.split(/\s+/);
+                document.getElementById('palavras').innerText = palavras.length;
+            }
+            
+            linhas = valor.split(/\n/);
+            document.getElementById('linhas').innerHTML = linhas.length;
+        }
+    </script>
+</body>
+</html>
